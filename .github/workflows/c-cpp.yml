@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: C++ CI
 
 on:
   push:
@@ -8,16 +8,20 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
+    # Paso 1: Descargar el código del repositorio
     - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+
+    # Paso 2: Instalar g++ y otras dependencias
+    - name: Install g++
+      run: sudo apt-get update && sudo apt-get install -y g++
+
+    # Paso 3: Compilar el proyecto con g++
+    - name: Compile with g++
+      run: g++ main.cpp SortingProgram.cpp -o sorting_program
+
+    # Paso 4: (Opcional) Ejecutar el programa compilado
+    - name: Run the program
+      run: ./sorting_program
